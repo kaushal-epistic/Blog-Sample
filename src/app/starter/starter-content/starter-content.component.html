@@ -1,0 +1,149 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Blog Sample      
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li class="active">Blog-Sample</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12 text-right">              
+        <button class="btn btn-primary" (click)="showAddPopup()" type="button">Add New Blog</button>        
+      </div>
+    </div>
+    <br/>
+    <div class="box">
+      <div class="box-header with-border">
+          <h3 class="box-title"><b>Blogs</b></h3>
+      </div>
+      <div class="box-body">
+          <div class="row">
+              <div class="col-md-12 table-responsive">                 
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th style="width:80px;">Id</th>
+                      <th style="width:80px;">User Id</th>
+                      <th style="width: 250px;">Title</th>
+                      <th>Body</th>
+                      <th style="width: 100px;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let p of posts">
+                      <td>{{p.id}}</td>
+                      <td>{{p.userId}}</td>
+                      <td>{{p.title}}</td>
+                      <td>{{p.body}}</td>
+                      <td>
+                        <a href="javascript:void(0)" (click)="showEdit(p)"><i class="fa fa-edit"></i></a>
+                        &nbsp;|&nbsp;
+                        <a href="javascript:void(0)" (click)="IsShowConfirBox(p.id)"><i style="color:#ff0909;" class="fa fa-remove"></i></a>
+                       </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+      </div>
+    </div>  
+    <div *ngIf="IsShowConfirm"> 
+    <div [ngClass]="{'in': IsShowConfirm}" 
+        id="DeleteConfirmModel" 
+        class="modal fade" 
+        role="dialog"
+        data-backdrop="static" 
+        style="display: block;background:rgba(0,0,0,0.6);" 
+        data-keyboard="false" 
+        aria-labelledby="myModalLabel" 
+        aria-hidden="false">
+        <div class="modal-dialog">  
+          <div class="modal-content">
+            <div class="modal-header" style="background: #ff0909 !important;color:#fff;">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Confirm Delete</h4>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure want to delete this post?.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" (click)="DeleteSelectedPost()">Delete</button>
+              <button type="button" class="btn btn-default" (click)="closeConfirmbox()">Cancel</button>
+            </div>
+          </div>    
+        </div>
+      </div>
+    </div>
+    <div *ngIf="IsSuccessOpenDialog">
+      <div
+        [ngClass]="{'in': IsSuccessOpenDialog}"  
+         id="deleteSuccessModel" class="modal fade" role="dialog"
+         data-backdrop="static" 
+        style="display: block;background:rgba(0,0,0,0.6);" 
+        data-keyboard="false" 
+        aria-labelledby="myModalLabel" 
+        aria-hidden="false">
+          <div class="modal-dialog">  
+            <div class="modal-content">
+              <div class="modal-header" style="background: #49cc1f;color:#fff;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete Success</h4>
+              </div>
+              <div class="modal-body">
+                <p>Post deleted Successfully!.</p>
+              </div>
+              <div class="modal-footer">               
+                <button type="button" class="btn btn-default" (click)="closeConfirmbox()">Close</button>
+              </div>
+            </div>    
+          </div>
+        </div>    
+      </div> 
+      <div *ngIf="IsShowAddPopup">
+        <div
+          [ngClass]="{'in': IsShowAddPopup}"  
+           id="deleteSuccessModel" class="modal fade" role="dialog"
+           data-backdrop="static" 
+          style="display: block;background:rgba(0,0,0,0.6);" 
+          data-keyboard="false" 
+          aria-labelledby="myModalLabel" 
+          aria-hidden="false">
+            <div class="modal-dialog">  
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" (click)="closeShowAdd()" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Add New Blog</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="email">User ID:</label>
+                      <input type="text" class="form-control" [(ngModel)]="objPost.userId" id="UserID">
+                    </div>
+                    <div class="form-group">
+                      <label for="pwd">Title:</label>
+                      <input type="text" class="form-control" [(ngModel)]="objPost.title" id="title">
+                    </div>
+                    <div class="form-group">
+                      <label for="pwd">Body:</label>
+                      <textarea type="text" class="form-control" [(ngModel)]="objPost.body" id="body"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">   
+                  <button *ngIf="IsAdd" type="button" class="btn btn-default" (click)="SavePost()">Save</button>    
+                  <button *ngIf="!IsAdd" type="button" class="btn btn-default" (click)="UpdatePost()">Update</button>         
+                  <button type="button" class="btn btn-default" (click)="closeShowAdd()">Cancel</button>
+                </div>
+              </div>    
+            </div>
+          </div>    
+        </div>   
+  </section>
+</div>
